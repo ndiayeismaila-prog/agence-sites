@@ -1,0 +1,182 @@
+
+
+Je vais coder le site complet en suivant le blueprint. Voici le fichier HTML final :
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Table du Terroir — Restaurant Gastronomique & Brasserie Artisanale</title>
+    <meta name="description" content="La Table du Terroir : restaurant gastronomique au cœur de Paris. Cuisine du terroir, bières artisanales et ambiance chaleureuse. Réservez en ligne.">
+    <meta name="keywords" content="restaurant gastronomique, brasserie artisanale, cuisine terroir, Paris, brunch, dîner">
+    <meta property="og:title" content="La Table du Terroir — Restaurant Gastronomique">
+    <meta property="og:description" content="Cuisine du terroir et bières artisanales dans une ambiance chaleureuse au cœur de Paris.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://latableduterroir.fr">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#8B4513',
+                    'primary-dark': '#6B3410',
+                    secondary: '#D4A574',
+                    accent: '#A0522D',
+                    light: '#F5F1E8',
+                    dark: '#2C1810',
+                    muted: '#8C7B6B',
+                },
+                fontFamily: {
+                    heading: ['Playfair Display', 'serif'],
+                    body: ['Inter', 'sans-serif'],
+                }
+            }
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --primary: #8B4513;
+            --primary-dark: #6B3410;
+            --secondary: #D4A574;
+            --accent: #A0522D;
+            --light: #F5F1E8;
+            --dark: #2C1810;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #2C1810; overflow-x: hidden; }
+        h1,h2,h3,h4,h5,h6 { font-family: 'Playfair Display', serif; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--light); }
+        ::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        .nav-solid { background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
+        .nav-solid .nav-link { color: var(--dark) !important; }
+        .nav-solid .nav-link:hover { color: var(--primary) !important; }
+        .nav-solid .logo-text { color: var(--dark) !important; }
+        .nav-solid .hamburger-line { background: var(--dark) !important; }
+
+        .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        .menu-item { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+        .menu-item:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(44,24,16,0.1); }
+
+        .review-card { transition: transform 0.3s ease; }
+        .review-card:hover { transform: translateY(-3px); }
+
+        .hero-overlay { background: linear-gradient(160deg, rgba(44,24,16,0.82) 0%, rgba(44,24,16,0.45) 55%, rgba(139,69,19,0.25) 100%); }
+
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        .float-anim { animation: float 3s ease-in-out infinite; }
+
+        @keyframes pulse-ring { 0%{box-shadow:0 0 0 0 rgba(139,69,19,0.4)} 70%{box-shadow:0 0 0 14px rgba(139,69,19,0)} 100%{box-shadow:0 0 0 0 rgba(139,69,19,0)} }
+        .pulse-ring { animation: pulse-ring 2s infinite; }
+
+        .swiper-button-next, .swiper-button-prev { color: var(--primary) !important; background: rgba(255,255,255,0.92); width: 46px !important; height: 46px !important; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .swiper-button-next::after, .swiper-button-prev::after { font-size: 16px !important; font-weight: 700; }
+        .swiper-pagination-bullet { background: var(--secondary) !important; opacity: 0.5; }
+        .swiper-pagination-bullet-active { background: var(--primary) !important; opacity: 1; }
+
+        .section-line { width: 50px; height: 3px; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 2px; }
+
+        .img-zoom { overflow: hidden; }
+        .img-zoom img { transition: transform 0.6s ease; }
+        .img-zoom:hover img { transform: scale(1.06); }
+
+        .newsletter-input:focus { box-shadow: 0 0 0 3px rgba(139,69,19,0.15); }
+
+        .mobile-overlay { background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body class="bg-light">
+
+<!-- ===== POPUP BIENVENUE ===== -->
+<div id="popup" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-500">
+    <div id="popupCard" class="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl transform scale-90 transition-all duration-500 relative">
+        <button onclick="closePopup()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-light hover:bg-primary hover:text-white flex items-center justify-center transition-all text-dark font-bold text-lg" aria-label="Fermer">&times;</button>
+        <div class="text-center">
+            <div class="w-14 h-14 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-5">
+                <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
+            </div>
+            <h3 class="font-heading text-2xl font-bold text-dark mb-2">Bienvenue !</h3>
+            <p class="text-muted text-sm mb-5">Découvrez notre nouveau menu d'automne et profitez de notre offre spéciale.</p>
+            <div class="bg-light rounded-xl p-4 mb-6 border border-secondary/20">
+                <p class="font-semibold text-dark text-lg">🍂 Menu Découverte à 39€</p>
+                <p class="text-muted text-sm mt-1">Entrée + Plat + Dessert + 1 bière artisanale offerte</p>
+            </div>
+            <div class="flex flex-col gap-3">
+                <a href="#reservation" onclick="closePopup()" class="bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-xl transition-all text-center">Réserver une table</a>
+                <button onclick="closePopup()" class="text-muted hover:text-dark font-medium py-2 transition-all text-sm">Peut-être plus tard</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== BOUTON FLOTTANT ===== -->
+<a href="#reservation" id="floatBtn" class="pulse-ring fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-full shadow-xl flex items-center gap-2 opacity-0 translate-y-10 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+    <span class="hidden sm:inline">Réserver</span>
+</a>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar" class="fixed top-0 left-0 w-full z-[60] transition-all duration-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-xl bg-primary flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <span class="text-white font-heading font-bold text-xl">T</span>
+                </div>
+                <div class="logo-text text-white transition-colors">
+                    <span class="font-heading font-bold text-lg leading-tight block">La Table</span>
+                    <span class="text-[11px] tracking-[0.25em] uppercase opacity-70">du Terroir</span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="#hero" class="nav-link text-white/90 hover:text-secondary text-sm font-medium tracking-wide transition-colors">Accueil</a>
+                <a href="#menu" class="nav-link text-white/90 hover:text-secondary text-sm font-medium tracking-wide transition-colors">La Carte</a>
+                <a href="#story" class="nav-link text-white/90 hover:text-secondary text-sm font-medium tracking-wide transition-colors">Notre Histoire</a>
+                <a href="#gallery" class="nav-link text-white/90 hover:text-secondary text-sm font-medium tracking-wide transition-colors">Galerie</a>
+                <a href="#reviews" class="nav-link text-white/90 hover:text-secondary text-sm font-medium tracking-wide transition-colors">Avis</a>
+                <a href="#news" class="nav-link text-white/90 hover:text-secondary text-sm font-medium tracking-wide transition-colors">Actualités</a>
+                <a href="#reservation" class="bg-primary hover:bg-primary-dark text-white text-sm font-semibold py-2.5 px-6 rounded-xl transition-all hover:shadow-lg">Réserver</a>
+            </div>
+
+            <!-- Hamburger -->
+            <button id="menuToggle" class="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" aria-label="Menu mobile">
+                <span class="hamburger-line w-6 h-0.5 bg-white rounded transition-all duration-300 origin-center"></span>
+                <span class="hamburger-line w-6 h-0.5 bg-white rounded transition-all duration-300"></span>
+                <span class="hamburger-line w-4 h-0.5 bg-white rounded transition-all duration-300 origin-center ml-auto"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Panel -->
+    <div id="mobilePanel" class="lg:hidden fixed inset-0 top-0 z-[55] pointer-events-none opacity-0 transition-all duration-400">
+        <div class="mobile-overlay absolute inset-0" onclick="closeMobileMenu()"></div>
+        <div id="mobileSlide" class="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl translate-x-full transition-transform duration-400 flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-light">
+                <span class="font-heading font-bold text-lg text-dark">Menu</span>
+                <button onclick="closeMobileMenu()" class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-dark hover:bg-primary hover:text-white transition-all" aria-label="Fermer">&times;</button>
+            </div>
+            <div class="flex flex-col p-6 gap-1 flex-1">
+                <a href="#hero" onclick="closeMobileMenu()" class="py-3 px-3 text-dark hover:text-primary hover:bg-light rounded-lg font-medium transition-all">Accueil</a>
+                <a href="#menu" onclick="closeMobileMenu()" class="py-3 px-3 text-dark hover:text-
